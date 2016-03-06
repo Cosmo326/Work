@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<!--
+Specialty Class Tags 
+
+Date, Time, DateTime class tag will auto input current date and/or time on page load
+Break class tag will add a break line best used in an empty div element
+StartHid class tag will initialize the element as hidden
+Required class tag will specify which elements are required for saving
+Savable class tag signifies which elements will be saved 
+	Savable elements must have an ID as well
+Signature class tag will add PRS of person filling in form
+
+*** REPLACE all Instances of formName and formVersion with proper Metadata ***
+
+-->
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="author" content="Adam Cosentino">
+		<meta name="description" content="formName">
+		<title>formName</title>
+		<style type="text/css" media="print">
+			/* NoPrint class tag will hide element while printing */
+			.NoPrint{display:none;}
+		</style>
+		<style type="text/css">
+			/* REQUIRED FOR FORMATING */
+			.Break{border-bottom: 1px solid black; width:96%; margin:20px 2%;}
+			.StartHid{display:none;}
+			.CkBoxPar{width:21px;}
+			/* ADD MORE STYLING BELOW */
+			body{width:8.5in; margin:auto;}
+			table{width:100%;}
+			input, select, textarea{width:98%}
+			select option{color:black;}
+			select option:first-child{color:gray;}
+
+			/* ADD MORE STYLING ABOVE */
+		</style>
+		<script type="text/javascript" src="js/FormFramework.js"></script>
+		<script type="text/javascript" src="js/ShaHash.js"></script>
+		<script type="text/javascript">
+			// initialize function runs on page load
+			var initialize = function () {
+				document.getElementById('filein').addEventListener('change', function(evt) { load(evt.target.files[0], "formName", "formVersion", update, function(text) { return Sha256.hash(text); }) }, false);
+				initializeForm();
+			}
+
+			var update = function (){
+
+			}
+			
+		</script>
+	</head>
+	<body onload="initialize()">
+		<!-- FORM HEADER -->
+		<table>
+			<tr>
+				<td style="width:60%;"><h1>formName</h1></td>
+				<td style="width:25%;">Form XXXXXXXX</td>
+				<td style="width:150px;"><img src="http:\\app-util\images\WayneSavingsLogo.jpg" alt="Logo"></img></td>
+			</tr>
+		</table>
+		<table>
+			<tr><table><tr>
+				<td style="text-align: right;">Date:</td>
+				<td style="width:20%"><input type="text" id="formDate" class="Date" readonly></td>
+			</tr></table></tr>
+			<tr><table>
+				<!-- EDITABLE BODY -->
+					<tr>
+					</tr>
+				<!-- EDITABLE BODY -->
+			</table></tr>
+		</table>
+		<!-- REVISION FOOTER -->
+		<table>
+			<tr><td><div style="text-align:right;">Revised 02/2016</div></td></tr>
+		</table>
+		<!-- CONTROL PANEL -->
+		<table id="controls" class="NoPrint" style="text-align:center;">
+			<tr>
+				<td style="width:5%">LOAD:</td>
+				<td><input type="file" id="filein" name="files[]" ></td>
+				<td style="width:5%"><button id="Save" onclick="save('.json', 'formName', 'formVersion');">Save</button></td>
+				<td style="width:5%"><button id="Print" onclick="window.print();">Print</button></td>
+				<td style="width:5%"><button id="Clear" onclick="location.reload();">Clear</button></td>
+				<td><input type="hidden" id="authSig" class="Signature Savable"></td>
+			</tr>
+		</table>
+	</body>
+</html>
